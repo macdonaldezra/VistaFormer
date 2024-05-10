@@ -1,0 +1,75 @@
+{
+    "breadcrumbs.enabled": false,
+    "editor.fontLigatures": true,
+    "editor.inlineSuggest.enabled": true,
+    "editor.lineHeight": 17,
+
+    // File handling stuff, replaces .editorconfig
+      "files.eol": "\n",
+      "files.trimTrailingWhitespace": true,
+      "files.insertFinalNewline": true,
+      "files.encoding": "utf8",
+      "files.exclude": {
+        "**/__pycache__": true,
+        "**/.pytest_cache": true,
+        "**/.mypy_cache": true,
+        "*.egg-info": true,
+        ".ipynb_checkpoints/": true
+      },
+
+      // Language stuff
+      "[python]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": "explicit"
+        },
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnType": true,
+        "editor.formatOnSave": true
+      },
+
+      "[yaml]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2
+      },
+
+      "[markdown]": {
+          "editor.unicodeHighlight.ambiguousCharacters": false,
+          "editor.unicodeHighlight.invisibleCharacters": false,
+          "editor.wordWrap": "on",
+          "editor.quickSuggestions": {
+              "comments": "off",
+              "strings": "off",
+              "other": "off"
+          },
+          "cSpell.fixSpellingWithRenameProvider": true,
+          "cSpell.advanced.feature.useReferenceProviderWithRename": true,
+          "cSpell.advanced.feature.useReferenceProviderRemove": "/^#+\\s/"
+      },
+
+      // Editor actions for other file types, if avialable
+      "editor.formatOnSave": true,
+
+      // Formatting with black
+      "python.formatting.provider": "none",
+
+      // Import sorting with isort
+      "isort.path": ["${env:PYENV_ROOT}/versions/vistaformer-env/bin/isort"],
+      "python.sortImports.args": ["--settings=${workspaceFolder}/pyproject.toml"],
+
+      // Expecting pyenv to be installed
+      "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/vistaformer-env/bin/python",
+      "python.terminal.activateEnvironment": true,
+      "python.analysis.autoImportCompletions": true,
+
+
+
+      // Configure Linting
+      "flake8.args": ["--config=${workspaceFolder}/.flake8"],
+      "flake8.cwd": "${workspaceFolder}",
+      "python.analysis.fixAll": ["source.unusedImports"],
+
+      "notebook.output.scrolling": true,
+      "jupyter.themeMatplotlibPlots": true,
+    }
