@@ -154,7 +154,7 @@ class VistaFormerHead(nn.Module):
                 ]
             )
 
-        self.activation = get_activation_layer(activation)
+        self.act = get_activation_layer(activation)
         self.temp_downsample = nn.ModuleList(
             [
                 get_temporal_agg_layer(

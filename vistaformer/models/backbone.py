@@ -40,7 +40,7 @@ class VistaFormerBackbone(nn.Module):
             self.embeddings.append(
                 PatchEmbed3D(
                     in_channels=embed_dims[i - 1] if i > 0 else in_channels,
-                    embed_dims=embed_dims[i],
+                    out_channels=embed_dims[i],
                     patch_size=patch_sizes[i],
                     stride=strides[i],
                     use_squeeze=use_squeeze,

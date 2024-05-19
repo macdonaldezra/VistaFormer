@@ -6,7 +6,7 @@ import time
 
 from torch.utils.tensorboard import SummaryWriter
 
-from remote_cattn.config import TrainingConfig
+from vistaformer.config import TrainingConfig
 
 from .utils import format_time, save_ddp_model
 from torchmetrics import Accuracy, MeanMetric, F1Score, JaccardIndex

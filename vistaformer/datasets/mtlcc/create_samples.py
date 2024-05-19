@@ -150,8 +150,11 @@ def remap_labels(labels: np.ndarray, label_dict: dict[int, int] = REMAP_LABELS):
 def parse_mtlcc_tfrecords(data_path: Path, out_path: Path):
     """
     Function performs the following pre-processing steps on TFRecord MTLCC dataset:
-    1) Load TFRecords to Numpy Array
-    2)
+        1) Load TFRecords to Numpy Array
+        2) Remove padding from instances
+        3) Remap labels to have values indexed from 0-17
+        4) Resize images to have the same dimensions
+        5) Save processed data as a pickle file
     """
     files = list(data_path.glob("*.tfrecord.gz"))
     assert len(files) > 0, f"No tfrecord files found in {data_path}"

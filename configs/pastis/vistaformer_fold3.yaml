@@ -10,7 +10,7 @@ ignore_index: 19
 
 optimizer: adamw
 lr_scheduler: onecycle
-output_path: /outputs
+output_path: ./outputs
 
 loss_fn: cross_entropy
 loss_fn_kwargs:
@@ -21,7 +21,10 @@ model_name: vistaformer
 model_kwargs:
   # Backbone Args
   embed_dims: [32, 64, 128]
-  seq_lens: [60, 30, 15]
+  seq_lens:
+    - 60
+    - 30
+    - 15
   patch_sizes:
     - [1, 2, 2]
     - 2
@@ -50,7 +53,7 @@ model_kwargs:
 
 dataset:
   name: pastis
-  path: /very/real/path/to/pastis
+  path: /mnt/sata1/datasets/time_series/PASTIS-R
   batch_size: 32
   num_workers: 8
 
@@ -66,6 +69,6 @@ dataset:
       - 4
       - 5
     val_folds:
-      - 2
-    test_folds:
       - 1
+    test_folds:
+      - 2

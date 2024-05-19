@@ -7,15 +7,14 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 import torch.multiprocessing as mp
 from torch.utils.tensorboard import SummaryWriter
 
-from remote_cattn.models import get_model
+from vistaformer.models import get_model
 from .utils import get_output_path, cleanup, setup
-from remote_cattn.config import TrainingConfig, get_model_config, config_to_yaml
-from remote_cattn.datasets import get_dist_dataloaders
-from remote_cattn.loss import get_loss
-from remote_cattn.train_and_evaluate.train_segmentation import train_segmentation
-from remote_cattn.train_and_evaluate.train_classification import train_classifier
-from remote_cattn.train_and_evaluate.eval_utils import generate_test_metrics
-from remote_cattn.train_and_evaluate.utils import load_ddp_model
+from vistaformer.config import TrainingConfig, get_model_config, config_to_yaml
+from vistaformer.datasets import get_dist_dataloaders
+from vistaformer.loss import get_loss
+from vistaformer.train_and_evaluate.train_segmentation import train_segmentation
+from vistaformer.train_and_evaluate.eval_utils import generate_test_metrics
+from vistaformer.train_and_evaluate.utils import load_ddp_model
 
 num_params = lambda model: sum(p.numel() for p in model.parameters() if p.requires_grad)
 
@@ -99,21 +98,7 @@ def main(rank: int, world_size: int, config: TrainingConfig, config_path: Path) 
 
     if rank == 0:
         config_to_yaml(config, out_path / "config.yaml")
-    if config.task == "classification":
-        ddp_model = train_classifier(
-            model=ddp_model,
-            criterion=loss,
-            optimizer=optimizer,
-            dataloader=dataloaders["train"],
-            device=device,
-            epochs=config.epochs,
-            output_path=out_path,
-            rank=rank,
-            lr_scheduler=lr_scheduler,
-            multi_input=config.is_multi_input_model,
-            logger=writer,
-        )
-    elif config.task == "semantic":
+    if config.task == "semantic":
         ddp_model = train_segmentation(
             model=ddp_model,
             criterion=loss,

@@ -12,8 +12,8 @@ import torch.utils.data
 from matplotlib.colors import ListedColormap
 from torch.utils.data import Dataset
 
-from remote_cattn.config import TrainingConfig
-from remote_cattn.datasets.pastis.transforms import (
+from vistaformer.config import TrainingConfig
+from vistaformer.datasets.pastis.transforms import (
     get_train_transforms,
     get_val_transforms,
 )
@@ -92,6 +92,7 @@ def get_dist_dataloader(
 
 def get_dataloader(
     config: TrainingConfig,
+    fold: int,
     transform: Optional[Callable] = None,
     shuffle: bool = True,
 ) -> torch.utils.data.DataLoader:
@@ -103,7 +104,7 @@ def get_dataloader(
         )
     dataset = PASTISDataset(
         root_dir=config.dataset.path,
-        folds=config.dataset.kwargs.get("folds", [5]),
+        folds=fold,
         transform=transform,
         use_dates=config.dataset.kwargs.get("use_dates", False),
         concat_data=config.dataset.kwargs.get("concat_data", False),

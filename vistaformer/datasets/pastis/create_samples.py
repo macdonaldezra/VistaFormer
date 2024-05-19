@@ -158,8 +158,6 @@ def generate_samples(root_dir: Path, output_dir: Path, output_dim: int):
                         "s1a": s1a_patch,
                         "s1d": s1d_patch,
                         "labels": label_patch,
-                        # See line here for why this class label mapping is used for the class label:
-                        # https://github.com/VSainteuf/pastis-benchmark/blob/ac1830ecfd4c2922b50f8555f142392c31913c75/code/dataloader.py#L201
                         "class_label": np.uint8(
                             label_patch[0, output_dim // 2, output_dim // 2]
                         ),  # save center pixel label as class label
@@ -185,7 +183,7 @@ if __name__ == "__main__":
         help="Output root directory for processed data. Data will be saved in the samples directory of the rootdir by default.",
     )
     parser.add_argument(
-        "--output-dim", type=int, default=24, help="Size of extracted samples"
+        "--output-dim", type=int, default=32, help="Size of extracted samples"
     )
     args = parser.parse_args()
 

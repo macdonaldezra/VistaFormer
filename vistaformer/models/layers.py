@@ -109,11 +109,14 @@ class GatedConv3D(nn.Module):
             in_channels, out_channels, kernel_size, stride=stride, padding=padding
         )
         self.sigmoid = nn.Sigmoid()
+        self.feature_maps = None
+        self.gradients = None
 
     def forward(self, x):
         feature = self.conv_feature(x)
         gate = self.conv_gate(x)
         gate = self.sigmoid(gate)
+        self.feature_maps = feature  # comment out if not visualizing feature maps
         return feature * gate
 
 
@@ -142,6 +145,9 @@ class GatedSEConv3D(nn.Module):
             x = self.se_block(x)
 
         return x
+
+    def backward_hook(self, grad):
+        self.gradients = grad
 
 
 class PatchEmbed3D(nn.Module):
@@ -191,7 +197,7 @@ class PatchEmbed3D(nn.Module):
         elif norm_type == "batch3d":
             self.norm = nn.BatchNorm3d(out_channels)
 
-    def forward(self, x: torch.Tensor):
+    def forward(self, x: torch.Tensor, return_gate: bool = False):
         """
         Forward pass of the 3D Patch Embedding Layer.
 
@@ -221,6 +227,9 @@ class PatchEmbed3D(nn.Module):
             x = x.reshape(b, t, c, h, w).permute(0, 2, 1, 3, 4).contiguous()
         elif self.norm_type == "batch3d":
             x = self.norm(x)
+
+        if return_gate:
+            return x, gate
 
         return x
 

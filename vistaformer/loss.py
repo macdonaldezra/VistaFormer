@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from remote_cattn.config import TrainingConfig
+from vistaformer.config import TrainingConfig
 
 
 def get_loss(config: TrainingConfig, device: Optional[str] = None) -> nn.Module:

@@ -8,8 +8,8 @@ import pandas as pd
 from torch.utils.data import Dataset, DataLoader
 import torch.utils.data
 
-from remote_cattn.config import TrainingConfig
-from remote_cattn.datasets.mtlcc.transforms import (
+from vistaformer.config import TrainingConfig
+from vistaformer.datasets.mtlcc.transforms import (
     get_train_transforms,
     get_val_transforms,
 )
