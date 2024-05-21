@@ -25,7 +25,6 @@ To evaluate the performance of a pre-trained model on a given dataset, please re
 
 *Please note that pre-trained model weights and training logs for each trial that was reported in the results section of the accompanying paper will be released once an unanonymized name can accompany this repository.*
 
-
 ## Results on [PASTIS](https://github.com/VSainteuf/pastis-benchmark) (Optical only) Semantic Segmentation Benchmark
 
 | Model Name         | mIoU | oA | #Params (M) | GFLOPs |
