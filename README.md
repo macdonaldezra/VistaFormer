@@ -1,6 +1,6 @@
 # VistaFormer
 
-This repository is the official code repository for the paper "VistaFormer: Vision Transformers for Satellite Image Time Series Segmentation"
+This repository is the official code repository for the paper "VistaFormer: Simple Vision Transformers for Satellite Image Time Series Segmentation"
 
 ## Installation
 
@@ -23,9 +23,10 @@ python -m vistaformer.train_and_evaluate.train
 
 To evaluate the performance of a pre-trained model on a given dataset, please refer to the `notebooks/inference.ipynb` file to compute complete metrics.
 
+*Please note that pre-trained model weights and training logs for each trial that was reported in the results section of the accompanying paper will be released once an unanonymized name can accompany this repository.*
 
-## Results on [PASTIS](https://github.com/VSainteuf/pastis-benchmark) (Optical only) Semantic Segmentation Benchmark Dataset
 
+## Results on [PASTIS](https://github.com/VSainteuf/pastis-benchmark) (Optical only) Semantic Segmentation Benchmark
 
 | Model Name         | mIoU | oA | #Params (M) | GFLOPs |
 | ------------------ |----- |----- | ------------ | ------|
@@ -35,12 +36,12 @@ To evaluate the performance of a pre-trained model on a given dataset, please re
 
 (†) TSViT operates on PASTIS24, where each sample is split into 24x24px sub-patches.
 
-## Results on [MTLCC](https://github.com/TUM-LMF/MTLCC) Semantic Segmentation Dataset Benchmark
+## Results on [MTLCC](https://github.com/TUM-LMF/MTLCC) Semantic Segmentation Benchmark
 
-| Model Name         | mIoU | oA | #Params (M) | GFLOPs |
+| Model Name         | mIoU | oA   | #Params (M) | GFLOPs |
 | ------------------ |----- |----- | ------------ | ------|
 | U-TAE              | 77.1 | 93.1 | 1.1          | 23.06 |
 | TSViT              | 84.8 | 95.0 | 1.6          | 91.88 |
 | **VistaFormer**    | 87.8 | 95.9 | 1.3          | 7.58  |
 
-Note that the GFLOPS and parameter measurements are based on inputs with input dimensions (B, C, T, H, W) = (4, 60, 10, 32, 32).
+Note that the GFLOPS and parameter measurements are based on inputs with input dimensions (B, C, T, H, W) = (4, 10, 60, 32, 32).

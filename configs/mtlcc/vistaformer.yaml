@@ -50,7 +50,7 @@ model_kwargs:
 
 dataset:
   name: pastis
-  path: /very/real/path/to/pastis
+  path: /very/real/path/to/mtlcc
   batch_size: 32
   num_workers: 8
 

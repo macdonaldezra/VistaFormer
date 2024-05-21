@@ -53,7 +53,7 @@ model_kwargs:
 
 dataset:
   name: pastis
-  path: /mnt/sata1/datasets/time_series/PASTIS-R
+  path: /very/real/path/to/pastis
   batch_size: 32
   num_workers: 8
 
