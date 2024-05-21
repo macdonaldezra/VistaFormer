@@ -1,0 +1,66 @@
+Bootstrap: docker
+From: nvidia/cuda:11.7.1-cudnn8-devel-ubuntu22.04
+
+
+# Environment variables that will be set during runtime
+%environment
+
+    export LANG=C.UTF-8
+    # May need to specify relevant time zone for your region depending on whether or not
+    # Singularity detects your host's time zone correctly
+    # Time Zone names can be found here: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    # Replace below with your own time zone... this is just an example
+    export TZ="Canada/<City>"
+    # Add path to poetry bin to PATH
+    export PATH="/root/.local/bin:$PATH"
+    export CUDA_HOME="/usr/local/cuda"
+
+# Copy over files from host to container
+%files
+    remote_cattn /code/
+    slurm/requirements.txt /code/requirements.txt
+
+# Install Python dependencies
+%post
+    # Replace below with your own time zone... this is just an example
+    export TZ="Canada/<City>"
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+    # Environment variables used by GDAL during compile
+    export CPLUS_INCLUDE_PATH=/usr/include/gdal
+    export C_INCLUDE_PATH=/usr/include/gdal
+
+    # Downloads the latest package lists (important)... and curl
+    apt-get update -y -qq && apt-get upgrade -y -qq && apt-get install -y -qq software-properties-common curl
+
+    # Install Python 3.10, dependencies for OpenCV, and GDAL
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq python3.10 \
+        python3-dev \
+        python3.10-distutils \
+        python3.10-venv \
+        python3-pip \
+        python3-setuptools \
+        libpython3.10-dev \
+        libkrb5-dev \
+        libgdal-dev \
+        libgl1 \
+        git \
+        gcc
+
+    echo "alias python=python3.10" >> ~/.bashrc && alias python=python3.10
+    # Reduce image size
+    rm -rf /var/lib/apt/lists/*
+
+    cd /code
+    python -m venv /ml-env
+    . /ml-env/bin/activate
+    pip install --upgrade pip
+    pip install -r requirements.txt
+    export PATH=/usr/local/bin:$PATH
+
+%runscript
+
+    # Executed commands and then follow it with a command like the following
+    # python -m vistaformer.train_and_evaluate.train
+    cd /code
+    . /ml-env/bin/activate
