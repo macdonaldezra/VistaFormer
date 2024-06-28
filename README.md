@@ -8,6 +8,8 @@ To run code from this repository you will first need to install the project depe
 
 ```bash
 pip install -r requirements.txt
+# To train the Neighbourhood Attention-based VistaFormer model, run the following
+pip3 install natten==0.14.6 -f https://shi-labs.com/natten/wheels/cu117/torch1.13/index.html
 ```
 
 ## Train Models
@@ -27,20 +29,27 @@ To evaluate the performance of a pre-trained model on a given dataset, please re
 
 ## Results on [PASTIS](https://github.com/VSainteuf/pastis-benchmark) (Optical only) Semantic Segmentation Benchmark
 
-| Model Name         | mIoU | oA | #Params (M) | GFLOPs |
-| ------------------ |----- |----- | ------------ | ------|
-| U-TAE              | 63.1 | 63.1 | 1.1          | 23.06 |
-| TSViT †            | 65.4 | 83.4 | 1.6          | 91.88 |
-| **VistaFormer**    | 65.5 | 84.0 | 1.3          | 7.58  |
+| Model Name                    | mIoU     | oA       | #Params (M)  | GFLOPs   |
+| ----------------------------- |--------- |--------- | ------------ | -------- |
+| U-TAE                         | 63.1     | 83.2     | 1.1          | 23.06    |
+| TSViT †                       | 65.4     | 83.4     | 1.6          | 91.88    |
+| **VistaFormer(Neighourhood)** | **65.3** | **83.7** | **1.1**      | **9.81** |
+| **VistaFormer**               | **65.5** | **84.0** | **1.3**      | **7.58** |
 
-(†) TSViT operates on PASTIS24, where each sample is split into 24x24px sub-patches.
+## Results on [PASTIS-R](https://github.com/VSainteuf/pastis-benchmark) (Optical+Radar fusion) Semantic Segmentation Benchmark
+
+| Model Name                  | mIoU     | oA       | #Params (M)  |
+| --------------------------- |--------- |--------- | ------------ |
+| U-TAE                       | 66.3     | 84.2     | 1.7          |
+| **VistaFormer Multi-Input** | **67.0** | **84.1** | **1.7**      |
 
 ## Results on [MTLCC](https://github.com/TUM-LMF/MTLCC) Semantic Segmentation Benchmark
 
-| Model Name         | mIoU | oA   | #Params (M) | GFLOPs |
-| ------------------ |----- |----- | ------------ | ------|
-| U-TAE              | 77.1 | 93.1 | 1.1          | 23.06 |
-| TSViT              | 84.8 | 95.0 | 1.6          | 91.88 |
-| **VistaFormer**    | 87.8 | 95.9 | 1.3          | 7.58  |
+| Model Name                    | mIoU     | oA       | #Params (M)  | GFLOPs   |
+| ----------------------------- |--------- |--------- | ------------ | -------- |
+| U-TAE                         | 77.1     | 93.1     | 1.1          | 23.06    |
+| TSViT                         | 84.8     | 95.0     | 1.6          | 91.88    |
+| **VistaFormer(Neighourhood)** | **88.5** | **96.1** | **1.1**      | **9.81** |
+| **VistaFormer**               | **87.8** | **95.9** | **1.3**      | **7.58** |
 
 Note that the GFLOPS and parameter measurements are based on inputs with input dimensions (B, C, T, H, W) = (4, 10, 60, 32, 32).

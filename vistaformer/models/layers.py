@@ -426,3 +426,76 @@ class PosFeedForward3d(nn.Module):
         x = self.drop(x)
 
         return x
+
+
+class CrossAttentionLayer(nn.Module):
+    def __init__(self, embed_dim, num_heads, dropout=0.1, drop_path=0.1):
+        super(CrossAttentionLayer, self).__init__()
+        self.num_heads = num_heads
+        self.embed_dim = embed_dim
+        self.head_dim = embed_dim // num_heads
+
+        assert (
+            self.head_dim * num_heads == embed_dim
+        ), "embed_dim must be divisible by num_heads"
+
+        self.q_linear = nn.Linear(embed_dim, embed_dim)
+        self.k_linear = nn.Linear(embed_dim, embed_dim)
+        self.v_linear = nn.Linear(embed_dim, embed_dim)
+        self.out_linear = nn.Linear(embed_dim, embed_dim)
+        self.scale = self.head_dim**-0.5
+        self.dropout = nn.Dropout(dropout) if dropout > 0.0 else nn.Identity()
+        self.drop_path = DropPath(drop_path) if drop_path > 0.0 else nn.Identity()
+
+    def forward(self, q, k, v):
+        B, T, C = q.shape
+
+        # Linear transformation and split into num_heads
+        q = (
+            self.q_linear(q)
+            .reshape(B, T, self.num_heads, self.head_dim)
+            .permute(0, 2, 1, 3)
+        )
+        k = (
+            self.k_linear(k)
+            .reshape(B, T, self.num_heads, self.head_dim)
+            .permute(0, 2, 1, 3)
+        )
+        v = (
+            self.v_linear(v)
+            .reshape(B, T, self.num_heads, self.head_dim)
+            .permute(0, 2, 1, 3)
+        )
+
+        # Scaled Dot-Product Attention
+        attn_weights = torch.matmul(q, k.transpose(-2, -1)) / self.scale
+        attn_weights = torch.nn.functional.softmax(attn_weights, dim=-1)
+        attn_weights = self.dropout(attn_weights)
+
+        # Apply attention weights to values
+        attn_output = torch.matmul(attn_weights, v)
+
+        # Concatenate heads and put through final linear layer
+        attn_output = (
+            attn_output.transpose(1, 2).contiguous().reshape(B, T, self.embed_dim)
+        )
+        output = self.out_linear(attn_output)
+        output = self.drop_path(output)
+        output = self.dropout(output)
+
+        return output
+
+
+class CrossAttentionTransformerLayer(nn.Module):
+    def __init__(self, embed_dim, mlp_dim, num_heads, dropout, drop_path):
+        super(CrossAttentionTransformerLayer, self).__init__()
+        self.cross_attn = nn.MultiheadAttention(embed_dim, num_heads, dropout=dropout)
+        self.ff = PosFeedForward3d(
+            embed_dim, mlp_dim, dropout=dropout, activation="gelu"
+        )
+
+    def forward(self, x1, x2, T, H, W):
+        x = self.cross_attn(x1, x2, x2)
+        x = self.ff(x, T, H, W)
+
+        return x

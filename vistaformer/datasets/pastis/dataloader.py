@@ -303,13 +303,6 @@ class PASTISDataset(Dataset):
             else:
                 label = data["labels"][0]
 
-        del data["class_label"]
-        del data["labels"]
-        # If date data is used it will be concatenated with other tensors so we remove it here...
-        del data["s2_doy"]
-        del data["s1d_doy"]
-        del data["s1a_doy"]
-
         out_data = None
         if self.concat_data:
             out_data = torch.Tensor()
@@ -326,9 +319,9 @@ class PASTISDataset(Dataset):
             if "s2" in self.sats:
                 out_data["s2"] = data["s2"]
             if "s1d" in self.sats:
-                out_data["s1d"] = data["s1d"]
+                out_data["s1"] = data["s1d"]
             if "s1a" in self.sats:
-                out_data["s1a"] = data["s1a"]
+                out_data["s1"] = torch.cat((out_data["s1"], data["s1a"]), dim=1)
 
         if self.remap_void_label:
             label[label == 19] = 0

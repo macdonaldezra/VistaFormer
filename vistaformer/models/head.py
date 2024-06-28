@@ -167,14 +167,7 @@ class VistaFormerHead(nn.Module):
         self.fuse = nn.Conv2d(
             conv_embed_dim * len(embed_dims), conv_embed_dim, kernel_size=1
         )
-        assert norm_type in [
-            "batch",
-            "layer",
-        ], "Invalid normalization type in SatFormer head."
-        if norm_type == "batchnorm":
-            self.norm = nn.BatchNorm2d(conv_embed_dim)
-        else:
-            self.norm = nn.LayerNorm([conv_embed_dim, input_dim, input_dim])
+        self.norm = nn.BatchNorm2d(conv_embed_dim)
 
         self.dropout = nn.Dropout(dropout) if dropout > 0 else nn.Identity()
         self.out = nn.Conv2d(conv_embed_dim, num_classes, kernel_size=1)

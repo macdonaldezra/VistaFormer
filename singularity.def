@@ -56,6 +56,7 @@ From: nvidia/cuda:11.7.1-cudnn8-devel-ubuntu22.04
     . /ml-env/bin/activate
     pip install --upgrade pip
     pip install -r requirements.txt
+    pip3 install natten==0.14.6 -f https://shi-labs.com/natten/wheels/cu117/torch1.13/index.html
     export PATH=/usr/local/bin:$PATH
 
 %runscript

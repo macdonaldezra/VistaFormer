@@ -114,6 +114,7 @@ def get_dataloader(
         split=split,
         transform=transform,
         return_paths=return_paths,
+        year=2016,
     )
     dataloader = torch.utils.data.DataLoader(
         dataset,
