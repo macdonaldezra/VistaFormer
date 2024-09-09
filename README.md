@@ -33,15 +33,8 @@ To evaluate the performance of a pre-trained model on a given dataset, please re
 | ----------------------------- |--------- |--------- | ------------ | -------- |
 | U-TAE                         | 63.1     | 83.2     | 1.1          | 23.06    |
 | TSViT †                       | 65.4     | 83.4     | 1.6          | 91.88    |
-| **VistaFormer(Neighourhood)** | **65.3** | **83.7** | **1.1**      | **9.81** |
-| **VistaFormer**               | **65.5** | **84.0** | **1.3**      | **7.58** |
-
-## Results on [PASTIS-R](https://github.com/VSainteuf/pastis-benchmark) (Optical+Radar fusion) Semantic Segmentation Benchmark
-
-| Model Name                  | mIoU     | oA       | #Params (M)  |
-| --------------------------- |--------- |--------- | ------------ |
-| U-TAE                       | 66.3     | 84.2     | 1.7          |
-| **VistaFormer Multi-Input** | **67.0** | **84.1** | **1.7**      |
+| **VistaFormer(Neighourhood)** | **65.3** | **83.7** | **1.1**      | **9.82** |
+| **VistaFormer**               | **65.5** | **84.0** | **1.3**      | **7.7**  |
 
 ## Results on [MTLCC](https://github.com/TUM-LMF/MTLCC) Semantic Segmentation Benchmark
 
@@ -49,7 +42,7 @@ To evaluate the performance of a pre-trained model on a given dataset, please re
 | ----------------------------- |--------- |--------- | ------------ | -------- |
 | U-TAE                         | 77.1     | 93.1     | 1.1          | 23.06    |
 | TSViT                         | 84.8     | 95.0     | 1.6          | 91.88    |
-| **VistaFormer(Neighourhood)** | **88.5** | **96.1** | **1.1**      | **9.81** |
-| **VistaFormer**               | **87.8** | **95.9** | **1.3**      | **7.58** |
+| **VistaFormer(Neighourhood)** | **88.5** | **96.1** | **1.1**      | **9.82** |
+| **VistaFormer**               | **87.8** | **95.9** | **1.3**      | **7.7**  |
 
 Note that the GFLOPS and parameter measurements are based on inputs with input dimensions (B, C, T, H, W) = (4, 10, 60, 32, 32).
