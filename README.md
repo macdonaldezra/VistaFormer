@@ -1,6 +1,8 @@
 # VistaFormer
 
-This repository is the official code repository for the paper "VistaFormer: Simple Vision Transformers for Satellite Image Time Series Segmentation"
+[![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2409.08461)
+
+This repository is the official code repository for the paper "VistaFormer: Scalable Vision Transformers for Satellite Image Time Series Segmentation"
 
 ## Installation
 
@@ -46,3 +48,16 @@ To evaluate the performance of a pre-trained model on a given dataset, please re
 | **VistaFormer**               | **87.8** | **95.9** | **1.3**      | **7.7**  |
 
 Note that the GFLOPS and parameter measurements are based on inputs with input dimensions (B, C, T, H, W) = (4, 10, 60, 32, 32).
+
+## Citation
+
+If you find this work or code useful in your research, please consider citing using the following citation:
+
+```tex
+@article{macdonald_2024_vistaformer,
+  title={VistaFormer: Scalable Vision Transformers for Satellite Image Time Series Segmentation},
+  author={MacDonald, Ezra and Jacoby, Derek and Coady, Yvonne},
+  journal={arXiv preprint arXiv:2409.08461},
+  year={2024}
+}
+```
